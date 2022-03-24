@@ -1,6 +1,4 @@
-import { useState } from "react"
-
-export default function TodoForm({formItem, setFormItem, handleAddTodo}){
+export default function TodoForm({formItem, setFormItem, handleAddTodo, clearTodoList, todoListItems}){
 
 
     return (
@@ -24,14 +22,18 @@ export default function TodoForm({formItem, setFormItem, handleAddTodo}){
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             strokeWidth={2} 
                             d="M12 6v6m0 0v6m0-6h6m-6 0H6" 
                         />
                     </svg>
                 </button>
-                <button className="bg-red-500 h-5/6 mx-1 w-[2.5rem] rounded flex justify-center items-center text-slate-300">
+                <button 
+                    className={`${todoListItems > 0 ? 'bg-red-500 text-slate-300' : 'bg-slate-200 text-slate-400'} h-5/6 mx-1 w-[2.5rem] rounded flex justify-center items-center`}
+                    onClick={clearTodoList}
+                    disabled={todoListItems > 0 ? false : true}
+                >
                     <svg 
                         className="w-6 h-6" 
                         fill="none" 
