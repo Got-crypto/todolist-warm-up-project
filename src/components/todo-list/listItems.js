@@ -1,7 +1,8 @@
 import { formatDistance } from "date-fns"
 import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 
-export default function ListItems({todoList, deleteTodo, setTodoList}){
+export default function ListItems({todoList, deleteTodo, setTodoList, searchResults}){
 
     const handleMarkTodo = (todoItem) => {
         const newTodoList = todoList.map((todo) => {
@@ -14,11 +15,22 @@ export default function ListItems({todoList, deleteTodo, setTodoList}){
         localStorage.setItem('todoList', JSON.stringify(newTodoList))
         setTodoList(newTodoList)
     }
+    const [whatToMap, setWhatToMap] = useState(todoList)
+    useEffect(()=>{
+        const handleWhatToMap = ()=> {
+            if( searchResults.length !== 0 ){
+                return searchResults
+            }
+            return todoList
+        }
+
+        setWhatToMap(handleWhatToMap())
+    }, [searchResults, todoList])
 
     return (
         <div className="h-96 flex flex-col">
             {
-                todoList.map((todoItem)=>{
+                whatToMap.map((todoItem)=>{
                     return <motion.div 
                             key={todoItem.id}
                             className="h-12 border-b items-center inline-flex my-4"

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 
-export default function PromptScreen({prompt, setPrompt, setTodoList}){
+export default function PromptScreen({prompt, setPrompt, setTodoList, promptMessage, setPromptMessage}){
     return(
         <div className={`fixed top-0 left-0 h-screen w-full bg-black bg-opacity-20 ${prompt ? 'flex justify-center' : 'hidden'}`}>
             <motion.div 
@@ -10,11 +10,13 @@ export default function PromptScreen({prompt, setPrompt, setTodoList}){
                 }}
             >
                 <p className="text-2xl py-4">
-                    Confirm to erase your entire todolist
+                    {
+                        promptMessage && promptMessage.message
+                    }
                 </p>
                 <div className="inline-flex py-4 w-28 justify-between items-center">
                     <button 
-                        className="bg-red-500 text-slate-300 h-8 w-8 flex justify-center items-center"
+                        className={`bg-red-500 ${promptMessage && (promptMessage.isValidation && 'hidden')} text-slate-300 h-8 w-8 flex justify-center items-center`}
                         onClick={()=>{
                             setTodoList([])
                             localStorage.removeItem('todoList')
@@ -29,7 +31,7 @@ export default function PromptScreen({prompt, setPrompt, setTodoList}){
                             xmlns="http://www.w3.org/2000/svg"
                         >
                             <path 
-                                strokeLinecap="round" 
+                                strokeLinecap="round"
                                 strokeLinejoin="round" 
                                 strokeWidth={2} 
                                 d="M5 13l4 4L19 7" 
@@ -38,7 +40,10 @@ export default function PromptScreen({prompt, setPrompt, setTodoList}){
                     </button>
                     <button 
                         className="bg-primary text-slate-300 h-8 w-8 flex justify-center items-center"
-                        onClick={()=>setPrompt(false)}
+                        onClick={()=>{
+                            setPrompt(false)
+                            setPromptMessage(null)
+                        }}
                     >
                         <svg 
                             className="w-6 h-6" 

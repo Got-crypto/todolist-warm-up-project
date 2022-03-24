@@ -6,6 +6,11 @@ export default function TodoForm({formItem, setFormItem, handleAddTodo, clearTod
                 placeholder="start typing to add an item or search ..." 
                 value={formItem}
                 onChange={({target})=>setFormItem(target.value)}
+                onKeyDown={(event)=>{
+                    if ( formItem !== "" && event.key === 'Enter' ){
+                        handleAddTodo()
+                    }
+                }}
             />
             <div className="w-2/6 flex justify-center h-full items-center">
                 <button 
