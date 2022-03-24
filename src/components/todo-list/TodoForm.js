@@ -1,6 +1,6 @@
 export default function TodoForm({formItem, setFormItem, handleAddTodo, clearTodoList, todoListItems}){
     return (
-        <div className="h-12 flex justify-between items-center">
+        <div className="h-12 flex justify-between items-center shadow shadow-black">
             <input
                 className="h-5/6 w-4/6 outline-primary p-1 text-sm font-bold rounded placeholder:text-base placeholder:font-normal"
                 placeholder="start typing to add an item or search ..." 
@@ -12,7 +12,7 @@ export default function TodoForm({formItem, setFormItem, handleAddTodo, clearTod
                     }
                 }}
             />
-            <div className="w-2/6 flex justify-center h-full items-center">
+            <div className="w-2/6 flex justify-end h-full items-center">
                 <button 
                     className="bg-primary h-5/6 w-[2.5rem] mx-1 rounded flex justify-center items-center text-slate-300"
                     onClick={handleAddTodo}
