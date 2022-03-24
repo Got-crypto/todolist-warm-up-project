@@ -14,9 +14,12 @@ export default function TodoList(){
             ...todoList,
             {
                 todo: formItem,
+                complete: false,
                 timeAdded: Date.now()
             }
         ]
+
+        newTodoList.sort( (a, b) => b.timeAdded - a.timeAdded )
 
         setTodoList(newTodoList)
         setFormItem("")
@@ -24,6 +27,12 @@ export default function TodoList(){
 
     const clearTodoList = ()=>{
         setPrompt(true)
+    }
+
+    const deleteTodo = (todo) => {
+        const newTodoList = todoList.filter( thisTodo => thisTodo.timeAdded !== todo.timeAdded )
+
+        setTodoList(newTodoList)
     }
     return (
         <div className="w-[30rem] h-auto">
@@ -34,7 +43,7 @@ export default function TodoList(){
                 clearTodoList={clearTodoList}
                 todoListItems={todoList.length}
             />
-            <ListItems todoList={todoList} />
+            <ListItems todoList={todoList} deleteTodo={deleteTodo} setTodoList={setTodoList}/>
             <PromptScreen setPrompt={setPrompt} prompt={prompt} setTodoList={setTodoList} />
         </div>
     )
