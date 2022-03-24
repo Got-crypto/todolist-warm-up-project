@@ -1,7 +1,14 @@
+import { motion } from "framer-motion"
+
 export default function PromptScreen({prompt, setPrompt, setTodoList}){
     return(
         <div className={`fixed top-0 left-0 h-screen w-full bg-black bg-opacity-20 ${prompt ? 'flex justify-center' : 'hidden'}`}>
-            <div className="h-56 rounded w-3/6 bg-slate-300 mt-20 flex flex-col justify-center items-center">
+            <motion.div 
+                className="h-56 rounded w-3/6 bg-slate-300 mt-20 flex flex-col justify-center items-center"
+                animate={{
+                    y: prompt ? 0 : -100
+                }}
+            >
                 <p className="text-2xl py-4">
                     Confirm to erase your entire todolist
                 </p>
@@ -10,6 +17,7 @@ export default function PromptScreen({prompt, setPrompt, setTodoList}){
                         className="bg-red-500 text-slate-300 h-8 w-8 flex justify-center items-center"
                         onClick={()=>{
                             setTodoList([])
+                            localStorage.removeItem('todoList')
                             setPrompt(false)
                         }}
                     >
@@ -48,7 +56,7 @@ export default function PromptScreen({prompt, setPrompt, setTodoList}){
                         </svg>
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </div>
     )
 }

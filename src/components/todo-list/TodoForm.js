@@ -1,6 +1,4 @@
 export default function TodoForm({formItem, setFormItem, handleAddTodo, clearTodoList, todoListItems}){
-
-
     return (
         <div className="h-12 flex justify-between items-center">
             <input
@@ -13,6 +11,7 @@ export default function TodoForm({formItem, setFormItem, handleAddTodo, clearTod
                 <button 
                     className="bg-primary h-5/6 w-[2.5rem] mx-1 rounded flex justify-center items-center text-slate-300"
                     onClick={handleAddTodo}
+                    disabled={ formItem === "" ? true : false }
                 >
                     <svg 
                         className="w-6 h-6"

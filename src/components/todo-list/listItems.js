@@ -1,5 +1,5 @@
 import { formatDistance } from "date-fns"
-import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
 export default function ListItems({todoList, deleteTodo, setTodoList}){
 
@@ -11,25 +11,27 @@ export default function ListItems({todoList, deleteTodo, setTodoList}){
             }
             return todo
         })
-
+        localStorage.setItem('todoList', JSON.stringify(newTodoList))
         setTodoList(newTodoList)
     }
 
     return (
         <div className="h-96 flex flex-col">
             {
-                todoList.map((todoItem, index)=>{
-                    return <div 
-                            key={index}
-                            className="h-12 items-center inline-flex my-4"
+                todoList.map((todoItem)=>{
+                    return <motion.div 
+                            key={todoItem.id}
+                            className="h-12 border-b items-center inline-flex my-4"
+                            layout
+                            initial={{
+                                opacity: 0
+                            }}
+                            animate={{
+                                opacity: 1,
+                            }}
                         >
-                            <div className="w-4/6 items-center inline-flex">
-                                <p className="h-8 flex text-white font-bold rounded justify-center items-center w-8 bg-primary">
-                                    {
-                                        index+1
-                                    }
-                                </p>
-                                <div className={`ml-4 ${todoItem.complete && 'bg-green-500 w-full'}`} >
+                            <div className="w-4/6 items-center flex">
+                                <div className={`${todoItem.complete && 'bg-green-500 w-full'}`} >
                                     <p className="text-xl">
                                         {
                                             todoItem.todo
@@ -64,7 +66,7 @@ export default function ListItems({todoList, deleteTodo, setTodoList}){
                                 </button>
                                 <button 
                                     className="bg-red-500 text-slate-300 h-5/6 mx-1 w-[2.5rem] rounded flex justify-center items-center"
-                                    onClick={()=>deleteTodo(todoItem)}
+                                    onClick={()=>deleteTodo(todoItem.id)}
                                 >
                                     <svg 
                                         className="w-6 h-6" 
@@ -82,7 +84,7 @@ export default function ListItems({todoList, deleteTodo, setTodoList}){
                                     </svg>
                                 </button>
                         </div>
-                    </div>
+                    </motion.div>
                 })
             }
         </div>
